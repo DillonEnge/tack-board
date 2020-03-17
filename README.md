@@ -5,7 +5,6 @@ Developed using...
  - React/React Native
  - Redux
  - TypeScript
-Served using...
  - Nginx
 ### Backend
  - Django
