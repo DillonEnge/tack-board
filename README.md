@@ -1,22 +1,25 @@
 # TackBoard (Temp Name)
 ## Set-Up:
 * If you have an android device, make sure USB debugging is turned ON and plug in your device
-* If you don't have an android device make sure to download and install Android Studio and both the SDK and AVD of your choice
+* If you don't have an android device make sure to download and install Android Studio and both the SDK and AVD of your choice, then launch the AVD
 ```shell
-npm install -g expo-cli
+npx install -g react-native-cli
 ```
 ```shell
-npm start
+cd TackBoard
+```
+```shell
+npx react-native run-android
 ```
 ## Stack:
 ### Frontend:
 Developed using...
- - React/React Native
+ - React Native
  - Redux
  - TypeScript
  - Nginx
 ### Backend:
- - Django
+ - DjangoREST
  - Go (Gin Microframework)
 ### Database:
  - PostgreSQL
