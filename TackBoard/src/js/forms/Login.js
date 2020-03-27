@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, KeyboardAvoidingView } from 'react-native';
+import { KeyboardAvoidingView } from 'react-native';
 import t from 'tcomb-form-native';
 import loginStyle from '../styles/LoginStyle';
 import AdvancedButton from '../components/AdvancedButton';
@@ -48,7 +48,8 @@ const options = {
             error: 'Email field is required'
         },
         password: {
-            error: 'password field is required'
+            error: 'password field is required',
+            secureTextEntry: true
         },
     },
     stylesheet: formStyles,
@@ -57,11 +58,15 @@ const options = {
 let formData = '';
 
 export default function Login(props) {
-    const { setLogin } = props;
+    const { setLogin, setLoggedIn } = props;
+
     const handleSubmit = () => {
         const value = formData.getValue();
+        const { email, password } = value;
 
-        console.log('value: ', value);
+        if (email === COPY.TEST_EMAIL && password === COPY.TEST_PASSWORD) {
+            setLoggedIn(true);
+        }
     };
 
     return (

@@ -8,12 +8,12 @@
 
 import React, { useState } from 'react';
 import {
-	SafeAreaView,
 	View,
 	StatusBar,
 } from 'react-native';
 import appStyle from './styles/AppStyle';
 import Landing from './views/Landing';
+import Home from './views/Home';
 
 export default function App() {
 	const [ loggedIn, setLoggedIn ] = useState(false);

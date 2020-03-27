@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, KeyboardAvoidingView, Platform } from 'react-native';
+import { KeyboardAvoidingView, Platform } from 'react-native';
 import t from 'tcomb-form-native';
 import createAccountStyle from '../styles/CreateAccountStyle';
 import AdvancedButton from '../components/AdvancedButton';
@@ -62,10 +62,12 @@ let formData = '';
 
 export default function CreateAccount(props) {
     const { setCreateAccount } = props;
+
     const handleSubmit = () => {
         const value = formData.getValue();
+        const { email, username, password } = value;
 
-        console.log('value: ', value);
+        print(`email: ${ email }, username: ${ username }, password: ${ password }`);
     };
 
     return (

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import landingStyle from '../styles/LandingStyle';
-import { Image, View, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, Platform, ScrollView } from 'react-native';
+import { Image, View, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import UserAuth from '../ui/UserAuth';
 import Login from '../forms/Login';
-import { Header } from 'react-native/Libraries/NewAppScreen';
 import CreateAccount from '../forms/CreateAccount';
 
 export default function Landing(props) {
