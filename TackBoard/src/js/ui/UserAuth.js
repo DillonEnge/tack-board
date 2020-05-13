@@ -3,8 +3,15 @@ import { View } from 'react-native';
 import COPY from '../constants/COPY';
 import userAuthStyle from '../styles/UserAuthStyle';
 import AdvancedButton from '../components/AdvancedButton';
+import { setCreateAccount, setLogin } from '../redux';
+import { connect } from 'react-redux';
 
-export default function UserAuth(props) {
+const mapDispatchToProps = {
+    setCreateAccount,
+    setLogin
+};
+
+function UserAuth(props) {
     const { setLogin, setCreateAccount } = props;
 
     return (
@@ -16,3 +23,5 @@ export default function UserAuth(props) {
         </View>
     )
 };
+
+export default connect(null, mapDispatchToProps)(UserAuth);

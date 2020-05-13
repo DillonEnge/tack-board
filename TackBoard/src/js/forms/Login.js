@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { KeyboardAvoidingView } from 'react-native';
 import t from 'tcomb-form-native';
 import loginStyle from '../styles/LoginStyle';
 import AdvancedButton from '../components/AdvancedButton';
+import { setLoggedIn, setLogin, requestAuthUser } from '../redux';
 import COPY from '../constants/COPY';
+import { connect } from 'react-redux';
+
+const mapDispatchToProps = {
+    setLoggedIn,
+    setLogin,
+    requestAuthUser
+};
 
 const Form = t.form.Form;
 
@@ -57,23 +65,38 @@ const options = {
 
 let formData = '';
 
-export default function Login(props) {
-    const { setLogin, setLoggedIn } = props;
+function Login(props) {
+    const { setLogin, setLoggedIn, requestAuthUser } = props;
+    const [value, setValue] = useState(null);
+
+    const clearForm = () => {
+        setValue(null);
+    };
 
     const handleSubmit = () => {
         const value = formData.getValue();
         const { email, password } = value;
 
+        requestAuthUser(email, password)
+
         if (email === COPY.TEST_EMAIL && password === COPY.TEST_PASSWORD) {
             setLoggedIn(true);
         }
+
+        clearForm();
     };
 
     return (
         <KeyboardAvoidingView behavior={ "padding" } style={loginStyle.container}>
-            <Form ref={data => formData = data} type={User} options={options} />
+            <Form
+                ref={data => formData = data}
+                type={User} options={options}
+                value={value}
+                onChange={value => setValue(value)}/>
             <AdvancedButton title={COPY.LOG_IN} onClick={handleSubmit} style={loginStyle.button} />
             <AdvancedButton title={'Back'} onClick={ () => setLogin(false) } style={loginStyle.button} />
         </KeyboardAvoidingView>
     )
 };
+
+export default connect(null, mapDispatchToProps)(Login);

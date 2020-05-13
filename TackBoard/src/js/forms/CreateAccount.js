@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { KeyboardAvoidingView, Platform } from 'react-native';
 import t from 'tcomb-form-native';
 import createAccountStyle from '../styles/CreateAccountStyle';
 import AdvancedButton from '../components/AdvancedButton';
+import { setCreateAccount, requestCreateUser } from '../redux';
 import COPY from '../constants/COPY';
+import { connect } from 'react-redux';
+
+const mapDispatchToProps = {
+    setCreateAccount,
+    requestCreateUser
+};
 
 const Form = t.form.Form;
 
@@ -60,21 +67,34 @@ const options = {
 
 let formData = '';
 
-export default function CreateAccount(props) {
-    const { setCreateAccount } = props;
+function CreateAccount(props) {
+    const { setCreateAccount, requestCreateUser } = props;
+    const [value, setValue] = useState(null);
+
+    const clearForm = () => {
+        setValue(null);
+    };
 
     const handleSubmit = () => {
         const value = formData.getValue();
-        const { email, username, password } = value;
+        const { username, password } = value;
 
-        print(`email: ${ email }, username: ${ username }, password: ${ password }`);
+        requestCreateUser(username, password);
+
+        clearForm();
     };
 
     return (
         <KeyboardAvoidingView behavior={ Platform.OS === 'ios' ? "padding" : "height" } style={ createAccountStyle.container }>
-            <Form ref={ data => formData = data } type={ User } options={ options } />
+            <Form
+                ref={data => formData = data}
+                type={User} options={options}
+                value={value}
+                onChange={value => setValue(value)}/>
             <AdvancedButton title={ COPY.CREATE_ACCOUNT} onClick={ handleSubmit } style={ createAccountStyle.button } />
             <AdvancedButton title={ COPY.BACK } onClick={ () => setCreateAccount(false) } style={ createAccountStyle.button } />
         </KeyboardAvoidingView>
     )
 };
+
+export default connect(null, mapDispatchToProps)(CreateAccount);

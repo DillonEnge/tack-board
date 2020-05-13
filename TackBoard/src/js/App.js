@@ -6,7 +6,7 @@
  * @flow
  */
 
-import React, { useState } from 'react';
+import React from 'react';
 import {
 	View,
 	StatusBar,
@@ -14,14 +14,22 @@ import {
 import appStyle from './styles/AppStyle';
 import Landing from './views/Landing';
 import Home from './views/Home';
+import { connect } from 'react-redux';
 
-export default function App() {
-	const [ loggedIn, setLoggedIn ] = useState(false);
+const mapStateToProps = (state, ownProps) => ({
+	authLogic: state.authLogicReducer
+});
+
+function App(props) {
+	const { authLogic } = props;
+	const { loggedIn } = authLogic
 
 	return (
 		<View style={ appStyle.container }>
 			<StatusBar barStyle="dark-content" />
-			{ loggedIn ? <Home /> : <Landing setLoggedIn={ setLoggedIn }/> }
+			{ loggedIn ? <Home /> : <Landing /> }
 		</View>
 	);
 };
+
+export default connect(mapStateToProps)(App)

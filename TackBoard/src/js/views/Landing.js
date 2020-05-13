@@ -4,11 +4,18 @@ import { Image, View, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import UserAuth from '../ui/UserAuth';
 import Login from '../forms/Login';
 import CreateAccount from '../forms/CreateAccount';
+import { connect } from 'react-redux';
 
-export default function Landing(props) {
-    const { setLoggedIn } = props;
-    const [ login, setLogin ] = useState(false);
-    const [ createAccount, setCreateAccount ] = useState(false);
+const mapStateToProps = (state, ownProps) => ({
+	authLogic: state.authLogicReducer
+});
+
+function Landing(props) {
+    const { authLogic } = props;
+    const {
+        login,
+        createAccount
+    } = authLogic;
     const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
     useEffect(() => {
@@ -28,13 +35,13 @@ export default function Landing(props) {
 
     const renderUserAuth = () => {
         if (createAccount) {
-            return <CreateAccount setCreateAccount={ setCreateAccount }/>;
+            return <CreateAccount/>;
         }
         else if (login) {
-            return <Login setLogin={ setLogin } setLoggedIn={ setLoggedIn } />;
+            return <Login />;
         }
 
-        return <UserAuth setLogin={ setLogin } setCreateAccount={ setCreateAccount } />;
+        return <UserAuth />;
     };
 
     return (
@@ -50,3 +57,5 @@ export default function Landing(props) {
         </View>
     );
 };
+
+export default connect(mapStateToProps)(Landing);
